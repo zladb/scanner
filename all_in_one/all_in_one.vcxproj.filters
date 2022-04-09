@@ -15,28 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MAIN.C">
+    <ClCompile Include="..\scan\one_scan.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SCAN.C">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="UTIL.C">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="one_scan.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GLOBALS.H">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SCAN.H">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="UTIL.H">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

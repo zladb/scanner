@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{51a01ece-f8ba-4edb-96dd-f8680103c4a9}</ProjectGuid>
-    <RootNamespace>scan</RootNamespace>
+    <ProjectGuid>{f241d07d-6f79-4ab1-a741-1112edb9fb41}</ProjectGuid>
+    <RootNamespace>allinone</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,15 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MAIN.C" />
-    <ClCompile Include="one_scan.cpp" />
-    <ClCompile Include="SCAN.C" />
-    <ClCompile Include="UTIL.C" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GLOBALS.H" />
-    <ClInclude Include="SCAN.H" />
-    <ClInclude Include="UTIL.H" />
+    <ClCompile Include="..\scan\one_scan.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

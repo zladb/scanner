@@ -35,6 +35,7 @@
 int lineno = 0;
 FILE * source;
 FILE * listing;
+FILE * fp;
 FILE * code;
 
 /* allocate and set tracing flags */
@@ -52,9 +53,9 @@ main( int argc, char * argv[] )
   char pgm[120]; /* source code file name */
 
   // filename[.exe] input[.c] ouput[.txt] 
-  if (argc != 2) // << argc != 3 으로 바꿔야 할듯?
+  if (argc != 3) // << argc != 3 으로 바꿔야 할듯?
     { 
-      fprintf(stderr,"usage: %s <filename>\n",argv[0]);
+      fprintf(stderr,"usage: %s <filename> <output_filename>\n",argv[0]);
       exit(1);
     }
 
@@ -70,7 +71,9 @@ main( int argc, char * argv[] )
   }
 
   // 결과를 출력하는 부분: .txt 파일에 결과 출력.
-  listing = stdout; /* send listing to screen */
+  fp = fopen(argv[2], "w");
+  // listing = stdout; /* send listing to screen */
+  listing = fp;
   fprintf(listing,"\nC- COMPILATION: %s\n",pgm);
 
 #if NO_PARSE
