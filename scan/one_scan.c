@@ -1,8 +1,8 @@
 
-//
-// 컴파일러 과제 - scanner 구현
-// 2020112757 컴퓨터학부 김유진
-//
+/*
+* 컴파일러 과제 - scanner 구현
+* 2020112757 컴퓨터학부 김유진
+*/
 
 #define _CRT_SECURE_NO_WARNINGS
 #define MAXTOKENLEN 40 /* MAXTOKENLEN is the maximum size of a token */
@@ -56,7 +56,7 @@ typedef enum
 	PLUS, MINUS, TIMES, OVER, LT, LTE, GT, GTE, EQ, NEQ, ASSIGN, COMMA, SEMI, LPAREN, RPAREN, LBRAC, RBRAC, LCBRAC, RCBRAC
 } TokenType;
 
-// 예약어 테이블!!
+// 예약어 테이블
 /* lookup table of reserved words */
 static struct
 {
@@ -179,24 +179,27 @@ TokenType getToken(void)
 		int c = getNextChar();
 		save = TRUE;
 
-		switch (state) // state에 따라
+		switch (state)
 		{
 		case START:
 			if (isdigit(c)) // 숫자
 				state = INNUM;
 			else if (isalpha(c)) // 문자
 				state = INID;
-			else if ((c == '<') || (c == '>') || (c == '=') || (c == '!')) // <--- in_assign에 들어가는 조건 변경
+			else if ((c == '<') || (c == '>') || (c == '=') || (c == '!')) // INASSIGN state에 들어가는 조건 변경
 				state = INASSIGN; // <, >, =, !
 			else if ((c == ' ') || (c == '\t') || (c == '\n')) // 공백문자
 				save = FALSE;
-			else if (c == '/')
+			else if (c == '/') // 주석 처리 부분
 			{
-				c = getNextChar();
-				if (c == '*') {
+				// [OTHER]
+				// 다음 문자가 '*'일 경우 INCOMMENT state로 진입함.
+				c = getNextChar(); 
+				if (c == '*') { 
 					save = FALSE;
 					state = INCOMMENT;
 				}
+				// 다음 문자가 '*'가 아닐 경우, 커서를 당기고 '/'를 토큰으로 인식함.
 				else {
 					ungetNextChar();
 					state = DONE;
@@ -208,7 +211,7 @@ TokenType getToken(void)
 				state = DONE;
 				switch (c)
 				{
-				case EOF: // 파일을 모두 다 읽었을 경우
+				case EOF:
 					save = FALSE;
 					currentToken = ENDFILE;
 					break;
@@ -221,7 +224,7 @@ TokenType getToken(void)
 				case '*':
 					currentToken = TIMES;
 					break;
-				case ',':
+				case ',':	// , 추가
 					currentToken = COMMA;
 					break;
 				case '(':
@@ -230,16 +233,16 @@ TokenType getToken(void)
 				case ')':
 					currentToken = RPAREN;
 					break;
-				case '[':
+				case '[':	// [ 추가
 					currentToken = LBRAC;
 					break;
-				case ']':
+				case ']':	// ] 추가
 					currentToken = RBRAC;
 					break;
-				case '{':
+				case '{':	// { 추가
 					currentToken = LCBRAC;
 					break;
-				case '}':
+				case '}':	// } 추가
 					currentToken = RCBRAC;
 					break;
 				case ';':
@@ -251,8 +254,9 @@ TokenType getToken(void)
 				}
 			}
 			break;
-		case INCOMMENT: // 코멘트 닫는 부분
+		case INCOMMENT:
 			save = FALSE;
+			// comment가 끝나기 전에 파일이 끝이나면 error를 출력함.
 			if (c == EOF)
 			{
 				state = DONE;
@@ -261,6 +265,7 @@ TokenType getToken(void)
 			}
 			else if (c == '*')
 			{
+				// 다음 문자가 '/'일 경우, comment가 끝나고 START state로 돌아감.
 				c = getNextChar();
 				if (c == '/') {
 					state = START;
@@ -271,8 +276,10 @@ TokenType getToken(void)
 			break;
 		case INASSIGN:
 			state = DONE;
-			char t = tokenString[0];
+			char t = tokenString[0]; // 앞서 저장한 문자
+			// 두 번째로 오는 문자가 '='이 아닐 경우
 			if (c != '=') {
+				/* backup in the input */
 				ungetNextChar();
 				save = FALSE;
 				switch (t)
@@ -292,7 +299,7 @@ TokenType getToken(void)
 				}
 			}
 			else // c == '='
-			{ /* backup in the input */
+			{
 				switch (t)
 				{
 				case '<':
