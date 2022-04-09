@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\scan\one_scan.c">
+    <ClCompile Include="one_scan.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
